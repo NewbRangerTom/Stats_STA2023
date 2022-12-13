@@ -77,19 +77,19 @@ class quartles:
 
     def kth_percentile(self, kpercent: int) -> float:
         n = len(self.data)
-        ith_position = kpercent/100*(n+1)
+        ith_position = kpercent / 100*(n+1)
         if ith_position % 2 == 0:
             kth = self.data[int(ith_position) - 1]
             return kth
         else:
-            kth = (self.data[floor(ith_position)-1] + self.data[ceil(ith_position)+1])/2
+            kth = (self.data[floor(ith_position) - 1] + self.data[ceil(ith_position) + 1]) / 2
             return kth
 
     def percentile_rank(self, a: float) -> float:
         less_than_a = [i for i in self.data if i < a]
         x = len(less_than_a)
         y = self.data.count(a)
-        rank = ((x + 0.5*y)/len(self.data))*100
+        rank = ((x + 0.5*y) / len(self.data))*100
         return rank
 
     def data_range(self) -> float:
@@ -106,25 +106,25 @@ class grouped_data:
 
     def mean(self) -> float:
         res_list = [self.midpoints[i] * self.freqs[i] for i in range(len(self.midpoints))]
-        mean = sum(res_list)/self.sample_size
+        mean = sum(res_list) / self.sample_size
         return mean
 
     def variance(self, p: bool) -> float:
-        m_two_f = [self.midpoints[i]**2 *self.freqs[i] for i in range(len(self.midpoints))]
+        m_two_f = [self.midpoints[i]**2 * self.freqs[i] for i in range(len(self.midpoints))]
         mf = [self.midpoints[i] * self.freqs[i] for i in range(len(self.midpoints))]
-        if p == False:
-            sigma_sqrd = (sum(m_two_f) - (sum(mf)**2/self.sample_size))/self.sample_size - 1
+        if p:
+            sigma_sqrd = (sum(m_two_f) - (sum(mf)**2 / self.sample_size)) / self.sample_size
         else:
-            sigma_sqrd = (sum(m_two_f) - (sum(mf)**2/self.sample_size))/self.sample_size
+            sigma_sqrd = (sum(m_two_f) - (sum(mf)**2 / self.sample_size)) / self.sample_size-1
         return sigma_sqrd
 
     def standard_div(self, p: bool) -> float:
-        m_two_f = [self.midpoints[i]**2 *self.freqs[i] for i in range(len(self.midpoints))]
+        m_two_f = [self.midpoints[i]**2 * self.freqs[i] for i in range(len(self.midpoints))]
         mf = [self.midpoints[i] * self.freqs[i] for i in range(len(self.midpoints))]
-        if p == False:
-            sd_sqrd = (sum(m_two_f) - (sum(mf)**2/self.sample_size))/self.sample_size - 1
+        if p:
+            sd_sqrd = (sum(m_two_f) - (sum(mf)**2 / self.sample_size)) /self.sample_size
         else:
-            sd_sqrd = (sum(m_two_f) - (sum(mf)**2/self.sample_size))/self.sample_size
+            sd_sqrd = (sum(m_two_f) - (sum(mf)**2 / self.sample_size)) / self.sample_size-1
         s_igma = sqrt(sd_sqrd)
         return s_igma
 
@@ -140,23 +140,23 @@ class ungrouped_data:
         return f'{self.data}'
 
     def mean(self) -> float:
-        mean = sum(self.data)/len(self.data)
+        mean = sum(self.data) / len(self.data)
         return mean
 
     def variance(self, p: bool) -> float:
         xsqrd = [i**2 for i in self.data]
-        if p == False:
-            sigma_sqrd = (sum(xsqrd) - (sum(self.data)**2/len(self.data)))/len(self.data)-1
+        if p:
+            sigma_sqrd = (sum(xsqrd) - (sum(self.data)**2 / len(self.data))) / len(self.data)
         else:
-            sigma_sqrd = (sum(xsqrd) - (sum(self.data)**2/len(self.data)))/len(self.data)
+            sigma_sqrd = (sum(xsqrd) - (sum(self.data)**2 / len(self.data))) / len(self.data)-1
         return sigma_sqrd
 
     def standard_div(self, p: bool) -> float:
         xsqrd = [i**2 for i in self.data]
-        if p == False:
-            sigma_sqrd = (sum(xsqrd) - (sum(self.data)**2/len(self.data)))/len(self.data) - 1
+        if p:
+            sigma_sqrd = (sum(xsqrd) - (sum(self.data)**2 / len(self.data))) / len(self.data)
         else:
-            sigma_sqrd = (sum(xsqrd) - (sum(self.data)**2/len(self.data)))/len(self.data)
+            sigma_sqrd = (sum(xsqrd) - (sum(self.data)**2 / len(self.data))) / len(self.data)-1
         s_igma = sqrt(sigma_sqrd)
         return s_igma
 

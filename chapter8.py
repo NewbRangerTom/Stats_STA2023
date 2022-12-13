@@ -5,6 +5,8 @@
 #       sample size
 #
 #   Author: NewbRangerTom           Date: 02 November 2022
+#
+#   Date: 13 December 2022          cleaned up variable declarations in methods
 
 """
 class:
@@ -59,16 +61,10 @@ class conf_interval:
         pass
 
     def dof(self, sample_size: int) -> int:                               
-        self.sample_size = sample_size
-
         df = sample_size - 1
         return df
 
     def standard_z_score(self, mu: float, x: float, sigma: float) -> float:
-        self.mean = mu
-        self.x = x              # represents some number
-        self.sigma = sigma
-        
         z = (x - mu) / sigma
         return z
 
@@ -88,34 +84,20 @@ class conf_interval:
         return z
 
     def moe_known_sigma(self, z: float, sigma: float, sample_size: int) -> float:                     
-        E = round(dec(z * (sigma/sqrt(sample_size))), 4)          # (z_score * sigma/sqrt of sample_size)
+        E = round(dec(z * (sigma / sqrt(sample_size))), 4)
         E = float(E)
         return E
 
     def moe_unknown_sigma(self, t: np.ndarray, s: float, sample_size: int) -> np.ndarray:
-        self.t = t
-        self.s = s
-        self.sample_size = sample_size
-        
         E = t * (s / sqrt(sample_size))
         return E
 
     def find_samp_size(self, z: float, moe: float, sigma: float) -> int:
-        self.z = z
-        self.moe = moe
-        self.sigma = sigma
-        
         num = ((z*sigma)/moe)**2
         num = int(num)
         return num
 
     def confidence_interval(self, alfa: float, df: int, mean: float, error: float, two_tails: bool) -> tuple:
-        self.alfa = alfa
-        self.df = df
-        self.mean = mean
-        self.error = error
-        self.two_tails = two_tails
-        
         if two_tails == False:
             ci = stats.t.interval(alpha = alfa, df = df, loc = mean, scale = error)
         else:
@@ -123,10 +105,6 @@ class conf_interval:
         return ci
 
     def tail_tscore(self, degree_of_freedom: int, confidence_interval_percent: float, two_tails: bool) -> np.ndarray:
-        self.degree_of_freedom = degree_of_freedom
-        self.confidence_interval_percent = confidence_interval_percent
-        self.two_tails = two_tails
-        
         if two_tails == False:
             # one-tailed test
             t_dist = stats.t.ppf(1 - (confidence_interval_percent / 2), degree_of_freedom)      

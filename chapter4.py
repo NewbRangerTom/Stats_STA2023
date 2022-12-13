@@ -42,11 +42,11 @@ class discrete_random_var:
         self.b: list = b
 
     def mean(self) -> float:
-        xp = []                                                     # empty list to hold x * p(x)
-        if (len(self.a) != len(self.b)):                            # list length error check
+        xp = []
+        if (len(self.a) != len(self.b)):
             raise ValueError("ERROR - lists are not same length")
-        else:                                                       # multiply x and p(x) then store in xp
+        else:
             for vala, valb in zip(self.a, self.b):
                 xp.append(vala * valb)
-            mean = sum(xp)                                          # for probabilities we sum the products to get the mean (average)
+            mean = sum(xp)
         return mean
